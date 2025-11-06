@@ -20,6 +20,39 @@ class DBHelper {
     );
   }
 
+  static Future<Map<String, double>> getTotals() async {
+    final db = await DBHelper.database();
+    double totalIncome = 0;
+    double totalExpense = 0;
+
+    final incomeResult = await db.rawQuery(
+      'SELECT SUM(amount) as total FROM transactions WHERE type = ?',
+      ['Income'],
+    );
+    if (incomeResult.first['total'] != null) {
+      totalIncome = incomeResult.first['total'] as double;
+    }
+
+    final expenseResult = await db.rawQuery(
+      'SELECT SUM(amount) as total FROM transactions WHERE type = ?',
+      ['Expense'],
+    );
+    if (expenseResult.first['total'] != null) {
+      totalExpense = expenseResult.first['total'] as double;
+    }
+
+    return {'income': totalIncome, 'expense': totalExpense};
+  }
+
+  static Future<List<Map<String, dynamic>>> getCategorySummary() async {
+    final db = await DBHelper.database();
+    // This query sums up amounts, grouped by category, only for expenses
+    return db.rawQuery(
+      'SELECT category, SUM(amount) as total FROM transactions WHERE type = ? GROUP BY category',
+      ['Expense'],
+    );
+  }
+
   static Future<int> addTransaction(Transaction tx) async {
     final db = await DBHelper.database();
     return db.insert(
