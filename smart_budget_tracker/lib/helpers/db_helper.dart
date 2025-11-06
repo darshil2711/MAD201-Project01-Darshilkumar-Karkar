@@ -1,4 +1,4 @@
-/// MAD201-01 Assignment 3
+/// MAD201-01 Project 1
 /// Darshilkumar Karkar - A00203357
 /// Database Helper for Transactions
 // lib/helpers/db_helper.dart
