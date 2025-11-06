@@ -1,11 +1,8 @@
 /// MAD201-01 Assignment 3
 /// Darshilkumar Karkar - A00203357
 /// Home Screen Implementation
-import 'package:flutter/material.dart';
-import 'add_transaction_screen.dart';
-import 'transactions_list_screen.dart';
-import 'reports_screen.dart';
-import 'settings_screen.dart';
+// ... (imports)
+import '../helpers/db_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +10,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Future<Map<String, double>> _totalsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshTotals();
+  }
+
+  void _refreshTotals() {
+    setState(() {
+      _totalsFuture = DBHelper.getTotals();
+    });
+  }
+
+  // Helper to navigate and refresh
+  void _navigateAndRefresh(Widget screen) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => screen)).then((_) {
+      // This .then() block runs when we pop() back to this screen
+      _refreshTotals();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,11 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (context) => SettingsScreen()));
-            },
+            onPressed: () => _navigateAndRefresh(SettingsScreen()),
           ),
         ],
       ),
@@ -34,40 +51,59 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Placeholder Cards
-            Card(child: ListTile(title: Text("Total Income: \$0.00"))),
-            Card(child: ListTile(title: Text("Total Expenses: \$0.00"))),
-            Card(child: ListTile(title: Text("Balance: \$0.00"))),
+            FutureBuilder<Map<String, double>>(
+              future: _totalsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                final income = snapshot.data?['income'] ?? 0.0;
+                final expense = snapshot.data?['expense'] ?? 0.0;
+                final balance = income - expense;
+
+                return Column(
+                  children: [
+                    Card(
+                      child: ListTile(
+                        title: Text(
+                          "Total Income: \$${income.toStringAsFixed(2)}",
+                        ),
+                        textColor: Colors.green,
+                      ),
+                    ),
+                    Card(
+                      child: ListTile(
+                        title: Text(
+                          "Total Expenses: \$${expense.toStringAsFixed(2)}",
+                        ),
+                        textColor: Colors.red,
+                      ),
+                    ),
+                    Card(
+                      child: ListTile(
+                        title: Text("Balance: \$${balance.toStringAsFixed(2)}"),
+                        textStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
 
             SizedBox(height: 20),
 
             ElevatedButton(
               child: Text("Add Transaction"),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => AddTransactionScreen(),
-                  ),
-                );
-              },
+              onPressed: () => _navigateAndRefresh(AddTransactionScreen()),
             ),
             ElevatedButton(
               child: Text("View All Transactions"),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => TransactionsListScreen(),
-                  ),
-                );
-              },
+              onPressed: () => _navigateAndRefresh(TransactionsListScreen()),
             ),
             ElevatedButton(
               child: Text("View Reports"),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ReportsScreen()),
-                );
-              },
+              onPressed: () => _navigateAndRefresh(ReportsScreen()),
             ),
           ],
         ),
