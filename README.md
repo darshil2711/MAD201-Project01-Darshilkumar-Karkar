@@ -1,4 +1,4 @@
-#Smart Budget Tracker
+Smart Budget Tracker
 
 A simple, cross-platform budget tracking application built with Flutter. This app allows users to record their daily income and expenses, view their transaction history, and see a summary of their current balance.
 
