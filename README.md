@@ -5,6 +5,7 @@ A simple, cross-platform budget tracking application built with Flutter. This ap
 This project was built for the MAD201 (Cross-Platform) course.
 
 🚀 Features
+
 Add, Edit, & Delete income or expense transactions.
 
 View a Home Dashboard with total income, total expenses, and current balance.
@@ -20,6 +21,7 @@ Fetches a live (USD to CAD) currency conversion rate from an API.
 Web Compatible: Uses SharedPreferences as a JSON database, so it runs in Chrome.
 
 🛠️ Tech Stack
+
 Flutter & Dart
 
 State Management: provider (for theme)
@@ -31,13 +33,17 @@ API: http package (for exchangerate-api.com)
 Formatting: intl package
 
 🏁 How to Run
+
 Clone the repository:
 
 git clone https://github.com/darshil2711/MAD201-Project01-Darshilkumar-Karkar.git
+
 Navigate into the project folder and get packages:
 
 cd MAD201-Project01-Darshilkumar-Karkar/smart_budget_tracker
+
 flutter pub get
+
 IMPORTANT: Add API Key
 
 Get a free API key from https://www.exchangerate-api.com.
