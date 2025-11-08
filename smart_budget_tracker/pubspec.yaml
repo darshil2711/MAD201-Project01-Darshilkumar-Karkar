@@ -43,6 +43,7 @@ dev_dependencies:
   shared_preferences: ^2.2.2 # For saving settings
   http: ^1.1.0           # For the API call
   intl: ^0.18.1          # For formatting dates and currency
+  provider: ^6.1.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
