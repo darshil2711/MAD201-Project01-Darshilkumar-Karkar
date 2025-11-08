@@ -1,11 +1,15 @@
 /// MAD201-01 Project 1
 /// Darshilkumar Karkar - A00203357
 /// Splash Screen Implementation
+library;
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'home_screen.dart'; // Make sure to create this file
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
