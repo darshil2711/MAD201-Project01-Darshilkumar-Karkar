@@ -133,7 +133,6 @@ class _TransactionsListScreenState extends State<TransactionsListScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      // Edit button
                       IconButton(
                         icon: Icon(
                           Icons.edit,
