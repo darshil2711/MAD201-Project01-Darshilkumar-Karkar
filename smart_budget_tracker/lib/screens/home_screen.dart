@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Card(
                       child: ListTile(
                         title: Text("Balance: \$${balance.toStringAsFixed(2)}"),
-                        textStyle: TextStyle(
+                        titleTextStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
