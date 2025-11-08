@@ -90,8 +90,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   void _submitData() async {
     if (_formKey.currentState!.validate()) {
-      // No need for _formKey.currentState!.save() when using controllers
-
       final newTransaction = Transaction(
         id: widget.transaction?.id, // Keep id if editing, null if adding
         title: _titleController.text, // Get value from controller
