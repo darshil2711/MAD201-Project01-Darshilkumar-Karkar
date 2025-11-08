@@ -1,8 +1,10 @@
 /// MAD201-01 Project 1
 /// Darshilkumar Karkar - A00203357
-/// Transaction Model
+/// Transaction Data Model
 // lib/models/transaction.dart
+
 class Transaction {
+  // Make sure 'id' is part of your model
   final int? id;
   final String title;
   final double amount;
@@ -11,7 +13,7 @@ class Transaction {
   final String date;
 
   Transaction({
-    this.id,
+    this.id, // Should be nullable
     required this.title,
     required this.amount,
     required this.type,
